@@ -1,0 +1,22 @@
+:root {
+    /* Green Theme */
+    --color-green-light: #d4edda;  /* Light Green */
+    --color-green-dark: #155724;   /* Dark Green */
+    --color-green-accent: #28a745; /* Primary Green */
+
+    /* Pink Theme */
+    --color-pink-light: #f8d7da;   /* Light Pink */
+    --color-pink-dark: #721c24;    /* Dark Pink */
+    --color-pink-accent: #e83e8c;  /* Primary Pink */
+
+    /* Neutral Colors */
+    --color-primary-text: #212529; /* Dark text */
+    --color-secondary-text: #6c757d; /* Muted text */
+    --color-background-light: #f8f9fa; /* Light Background */
+    --color-background-dark: #343a40; /* Dark Background */
+    --color-border: #dee2e6; /* Border Gray */
+
+    /* Shadows and Highlights */
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-highlight: rgba(255, 255, 255, 0.8);
+}
