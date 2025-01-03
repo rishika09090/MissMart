@@ -1,0 +1,9 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--color-green-light);
+    margin: 0px;
+    padding: 0px;
+}

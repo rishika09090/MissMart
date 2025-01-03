@@ -7,224 +7,106 @@
     <title>MissMart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="./assets/navLogo.png">
-    <link rel="stylesheet" href="styles/colors.css">
-    <style>
-        * {
-            font-family: Helvetica, Arial, sans-serif;
-        }
+    <link rel="stylesheet" href="./styles/colors.css">
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/navbar.css">
 
-        nav {
-            /* width: 70%; */
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
-            background-color: var(--color-pink-light);
-            /* Light green background */
-            border: 2px solid var(--color-border);
-            /* Neutral border */
-            border-radius: 5px;
-            padding: 10px;
-            box-shadow: 0 4px 6px var(--color-shadow);
-        }
-
-        #logo-name {
-            display: flex;
-            flex-direction: column;
-            gap: 0px;
-            color: var(--color-primary-text);
-        }
-
-        #logo-name>span {
-            display: flex;
-            gap: 0;
-        }
-
-        #logo-name>span>#miss {
-            color: var(--color-green-accent);
-            /* Green text for 'Miss' */
-            font-weight: 900;
-        }
-
-        #logo-name>span>span:last-child {
-            color: var(--color-primary-text);
-            /* Default color for 'Mart' */
-        }
-
-        #logo {
-            align-items: center;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--color-green-accent);
-            /* Green accent text */
-            /* border: 3px solid var(--color-pink-accent); */
-            border-radius: 10px;
-            /* background-color: var(--color-green-light); */
-            line-height: 8px;
-        }
-
-        #logo>div>img {
-            border-radius: 5px;
-            width: 40px;
-            border: 2px solid var(--color-border);
-            /* Neutral border */
-        }
-
-        #logo>div {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            /* justify-content: center; */
-        }
-
-
-        #logoDesc {
-            font-size: 16px;
-            font-weight: normal;
-            color: var(--color-green-accent);
-            margin-top: -10px;
-            /* Muted text */
-        }
-
-        #search-box {
-            position: relative;
-            width: 500px;
-        }
-
-        #search-box input[type="search"] {
-            width: 100%;
-            padding: 10px 10px 10px 40px;
-            /* Space for the icon inside */
-            border: 3px solid var(--color-green-accent);
-            /* Green accent border */
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-            background-color: var(--color-background-light);
-            /* Light background */
-            color: var(--color-primary-text);
-            /* Dark text */
-        }
-
-        #search-box .fa-search {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            /* Centers the icon vertically */
-            color: var(--color-green-accent);
-            /* Dark green icon */
-            font-size: 18px;
-            /* Adjust icon size */
-        }
-
-        #location-btn>button {
-            font-family: Helvetica, Arial, sans-serif;
-            font-weight: 600;
-            color: var(--color-primary-text);
-            font-size: 12px;
-            line-height: 16px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            /* Align text and icon */
-            justify-content: center;
-            /* Center content */
-            gap: 8px;
-            /* Space between the icon and text */
-            width: 100%;
-            padding: 5px 10px;
-            height: 40px;
-            background-color: var(--color-green-light);
-            border: 2px solid var(--color-green-accent);
-            border-radius: 0.25rem;
-            text-align: left;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            box-shadow: 0 2px 4px var(--color-shadow);
-        }
-
-        #location-btn>button i {
-            font-size: 16px;
-            /* Adjust the size of the compass icon */
-            color: var(--color-primary-text);
-            /* Icon color */
-        }
-
-        #location-btn>button:hover {
-            background-color: var(--color-green-accent);
-            /* Green accent background */
-            color: var(--color-highlight);
-            /* Highlight text on hover */
-            cursor: pointer;
-        }
-
-        #login-signup-btn>button {
-            font-family: Helvetica, Arial, sans-serif;
-            font-weight: 600;
-            /* Dark text */
-            font-size: 12px;
-            line-height: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 100%;
-            padding: 5px 10px;
-            height: 40px;
-            background-color: var(--color-primary-text);
-            /* Light green background */
-            border: 2px solid var(--color-secondary-text);
-            /* Green accent border */
-            border-radius: 0.25rem;
-            text-align: left;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            box-shadow: 0 2px 4px var(--color-shadow);
-            color: var(--color-highlight);
-        }
-
-        #login-signup-btn>button:hover {
-            background-color: var(--color-green-accent);
-            /* Green accent background */
-            color: var(--color-highlight);
-            /* Highlight text on hover */
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
-    <nav>
-        <div id="logo">
-            <div>
-                <img src="./assets/navLogo.png" alt="MissMart logo" width="50px">
-                <span id="logo-name">
-                    <span>
-                        <span id="miss">Miss</span>
-                        Mart
-                    </span>
-                </span>
+    <div id="main-content">
+        <div id="navbar"></div>
+        <div class="trendings">
+            <div class="card">
+                <img src="https://www.bigbasket.com/media/uploads/banner_images/hp_topstrip_m_250923_01.png?tr=w-190,q-80"
+                    alt="Image 1">
             </div>
-            <span id="logoDesc">Where Fresh Meets Fabulous!!</span>
+            <div class="card">
+                <img src="https://www.bigbasket.com/media/uploads/banner_images/hp_topstrip_m_250923_02.png?tr=w-190,q-80"
+                    alt="Image 2">
+            </div>
+            <div class="card">
+                <img src="https://www.bigbasket.com/media/uploads/banner_images/hp_topstrip_m_250923_03.png?tr=w-190,q-80"
+                    alt="Image 3">
+            </div>
+            <div class="card">
+                <img src="https://www.bigbasket.com/media/uploads/banner_images/hp_topstrip_m_250923_04.png?tr=w-190,q-80"
+                    alt="Image 4">
+            </div>
+            <div class="card">
+                <img src="https://www.bigbasket.com/media/uploads/banner_images/hp_topstrip_m_250923_05.png?tr=w-190,q-80"
+                    alt="Image 5">
+            </div>
+            <div class="card">
+                <img src="https://www.bigbasket.com/media/uploads/banner_images/hp_topstrip_m_250923_06.png?tr=w-190,q-80"
+                    alt="Image 6">
+            </div>
         </div>
-        <div id="search-box">
-            <i class="fa fa-search"></i>
-            <input type="search" placeholder="Search for Products...">
+        <div class="carousel">
+            <div class="carousel-slide">
+                <div class="carousel-item"
+                    style="background-image: url('https://www.bigbasket.com/media/uploads/banner_images/hp_m_petstore_250923_400.jpg?tr=w-1130,q-80');">
+                </div>
+                <div class="carousel-item"
+                    style="background-image: url('https://www.bigbasket.com/media/uploads/banner_images/hp_m_babycare_250923_400.jpg?tr=w-1130,q-80');">
+                </div>
+                <div class="carousel-item"
+                    style="background-image: url('https://www.bigbasket.com/media/uploads/banner_images/hp_bcd_m_bcd_250923_400.jpg?tr=w-1130,q-80');">
+                </div>
+                <div class="carousel-item"
+                    style="background-image: url('https://www.bigbasket.com/media/uploads/banner_images/hp_m_health_suppliment_250923_400.jpg?tr=w-1130,q-80');">
+                </div>
+            </div>
+            <!-- Arrows -->
+            <button class="carousel-arrow arrow-left">&#8249;</button>
+            <button class="carousel-arrow arrow-right">&#8250;</button>
+            <div class="carousel-indicators">
+                <div class="indicator active" data-slide="0"></div>
+                <div class="indicator" data-slide="1"></div>
+                <div class="indicator" data-slide="2"></div>
+                <div class="indicator" data-slide="3"></div>
+            </div>
+        </div>
 
-        </div>
-        <div id="location-btn">
-            <button>
-                <i class="fa fa-compass"></i> Select Location
-            </button>
-        </div>
+        <div id="smart-basket">
+            <div id="smart-basket-heading">
+                <h2>My Smart Basket</h2>
+                <div>
+                    <button id="view-all">View All</button>
+                    <button class="view-all-arrow-button view-all-arrow-button-left">&#8249;</button>
+                    <button class="view-all-arrow-button view-all-arrow-button-right">&#8250;</button>
+                </div>
+            </div>
 
-        <div id="login-signup-btn">
-            <button>Login/Sign Up</button>
+
+            <div id="basket-items"></div>
         </div>
-    </nav>
+    </div>
+
+
+    <!-- Login/Signup Modal -->
+    <div id="login-modal">
+        <div id="modal-content">
+            <button id="close-modal">&times;</button>
+            <div id="form-section">
+                <h2>Login/Sign up</h2>
+                <form id="login-form">
+                    <label for="user-input">Enter Phone number / Email Id</label>
+                    <input type="text" id="user-input" placeholder="Phone number / Email Id">
+                    <input type="password" name="" id="password" placeholder="Password">
+                    <button type="submit">Continue</button>
+                </form>
+                <p>
+                    By continuing, I accept the
+                    <a href="#">Terms and Conditions</a> & <a href="#">Privacy Policy</a>.
+                    This site is protected by reCAPTCHA and the Google - Privacy Policy and & Terms of Service apply.
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script src="./scripts/index.js"></script>
+<script src="./scripts/navbar.js"></script>
 
 </html>

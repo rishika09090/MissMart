@@ -1,0 +1,359 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--color-green-light);
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.carousel {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+
+.carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+}
+
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 25px;
+}
+
+.arrow-left {
+    left: 10px;
+}
+
+.arrow-right {
+    right: 10px;
+}
+
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.indicator.active {
+    background-color: #333;
+}
+
+.trendings {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+}
+
+.card {
+    width: 150px;
+    height: 100px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    border: 2px solid var(--color-green-dark);
+    border-radius: 8px;
+
+}
+
+#smart-basket {
+    background-color: var(--color-background-light);
+    width: 70%;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+}
+
+
+.basket-item {
+    display: grid;
+    grid-template-columns: repeat(1fr, 4);
+    margin-bottom: 20px;
+}
+
+.item-image {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.price {
+    color: #333;
+    font-weight: bold;
+}
+
+.original-price {
+    color: #999;
+    text-decoration: line-through;
+}
+
+.discount {
+    color: #f00;
+    font-weight: bold;
+}
+
+#smart-basket {
+    width: 80%;
+    margin: 20px auto;
+    align-items: center;
+    justify-content: center;
+}
+
+#smart-basket-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#basket-items {
+    display: flex;
+    overflow: hidden;
+    padding: 30px;
+    margin-top: 20px;
+    gap: 20px;
+    transition: transform 0.5s ease-in-out;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+}
+
+.basket-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 22.5%;
+    background-color: #f9f9f9;
+    padding: 0px 10px 10px 10px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+.item-image {
+    padding: 20px;
+    border: 2px solid var(--color-border);
+    width: 220px;
+    height: 220px;
+    /* margin-left: 20px; */
+}
+
+.item-image img {
+    /* width: 200%; */
+    height: 220px;
+    width: 220px;
+
+    /* object-fit: cover; */
+}
+
+.item-details {
+    margin-top: 10px;
+}
+
+.price {
+    font-weight: bold;
+    color: green;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.discount {
+    background-color: var(--color-green-accent);
+    color: var(--color-background-light);
+    font-weight: bold;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.view-all-arrow-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#view-all {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.item-details>p:first-child {
+    color: var(--color-secondary-text);
+    margin-bottom: -10px;
+}
+
+#item-details-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#save-for-later-btn {
+    width: 50px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+#add-to-cart-btn {
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    border: 2px solid var(--color-pink-accent);
+}
+
+#add-to-cart-btn:hover {
+    background-color: var(--color-pink-accent);
+    color: var(--color-background-light);
+}
+
+/* Blur Effect */
+body.modal-active #main-content {
+    filter: blur(5px);
+}
+
+/* Modal */
+#login-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-modal.active {
+    display: flex;
+}
+
+#modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Close Button */
+#close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Form Section */
+#form-section h2 {
+    margin-bottom: 20px;
+}
+
+#form-section input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#form-section button {
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#form-section button:hover {
+    background-color: #e64a19;
+}
+
+#form-section p {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+#form-section a {
+    color: #007bff;
+    text-decoration: none;
+}
