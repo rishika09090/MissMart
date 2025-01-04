@@ -1,0 +1,92 @@
+/* General Footer Styling */
+#footer {
+    background-color: #222;
+    color: #eee;
+    padding: 20px 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .footer-section {
+    max-width: 300px;
+    margin: 10px;
+  }
+  
+  .footer-logo {
+    width: 150px;
+    margin-bottom: 15px;
+  }
+  
+  .footer-section h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+  }
+  
+  .footer-section ul li {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #bbb;
+    width: max-content;
+    cursor: pointer;
+  }
+  
+  .footer-section ul li a {
+    color: #66ccff;
+    text-decoration: none;
+  }
+  
+  .footer-section ul li:hover {
+    text-decoration: underline;
+  }
+  
+  /* Social Media Links */
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .social-links a {
+    display: inline-block;
+    margin: 5px 10px;
+    color: #66ccff;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .social-links a i {
+    margin-right: 8px;
+    font-size: 50px;
+  }
+  
+  .social-links a:hover {
+    color: #fff;
+  }
+  
+  /* Footer Bottom */
+  .footer-bottom {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #aaa;
+  }
+  
+  h2 {
+    margin: 0px;
+    margin-bottom: -10px;
+  }

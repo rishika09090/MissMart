@@ -29,6 +29,11 @@ document.getElementById("navbar").innerHTML = `<nav id="nav">
         <div id="login-signup-btn">
             <button id="login-btn">Login/Sign Up</button>
         </div>
+        <div id="cart-btn">
+            <button>
+                <i class="fa fa-shopping-cart"></i>
+            </button>
+        </div>
     </div>
 
     <div id="bottom-nav">
@@ -48,6 +53,9 @@ document.getElementById("navbar").innerHTML = `<nav id="nav">
 <div id="dropdown"></div>
 `
 
+document.getElementById('cart-btn').addEventListener('click', function() {
+    window.location.href = 'cart.html';
+});
 
 const navbar = document.getElementById("nav");
 if (navbar) {

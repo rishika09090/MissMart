@@ -288,54 +288,76 @@ nav {
 }
 
 
-    #shop-by-category-btn {
-      position: relative;
-      display: inline-block;
-    }
+#shop-by-category-btn {
+    position: relative;
+    display: inline-block;
+}
 
-    #dropdown {
-      display: none;
-      position: absolute;
-      top: 150px;
-      left: 320px;
-      background-color: black;
-      color:var(--color-background-light);
-      padding: 10px;
-      border-radius: 5px;
-      z-index: 20;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+#dropdown {
+    display: none;
+    position: absolute;
+    top: 150px;
+    left: 320px;
+    background-color: black;
+    color: var(--color-background-light);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 20;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .dropdown-item {
-      padding: 13px 10px;
-      cursor: pointer;
-      position: relative;
+.dropdown-item {
+    padding: 13px 10px;
+    cursor: pointer;
+    position: relative;
 
-    }
+}
 
-    .dropdown-item:hover {
-      background-color: var(--color-highlight);
-      color: var(--color-primary-text);
-    }
+.dropdown-item:hover {
+    background-color: var(--color-highlight);
+    color: var(--color-primary-text);
+}
 
-    .dropdown-child {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 100%;
-      background-color: var(--color-background-dark);
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow:var(--color-shadow);
-      width: max-content;
-      color:var(--color-background-light);
+.dropdown-child {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: var(--color-background-dark);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: var(--color-shadow);
+    width: max-content;
+    color: var(--color-background-light);
 
-    }
-    .dropdown-child > .dropdown-item > .dropdown-child {
-        background-color: var(--color-secondary-text);
-        color:var(--color-background-light);
-    }
+}
 
-    .dropdown-item:hover > .dropdown-child {
-      display: block;
-    }
+.dropdown-child>.dropdown-item>.dropdown-child {
+    background-color: var(--color-secondary-text);
+    color: var(--color-background-light);
+}
+
+.dropdown-item:hover>.dropdown-child {
+    display: block;
+}
+
+#cart-btn button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    background-color: var(--color-green-light);
+    border-radius: 5px;
+}
+
+#cart-btn i {
+    font-size: 20px;
+    color: var(--color-pink-dark);
+    background-color: var(--color-green-light);
+    /* Dark pink color */
+}
+
+#cart-btn {
+    background-color: var(--color-green-light);
+    border-radius: 5px;
+}

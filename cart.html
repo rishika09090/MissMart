@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MissMart</title>
+  <link rel="stylesheet" href="./styles/cart.css">
+  <link rel="stylesheet" href="./styles/navbar.css">
+  <link rel="stylesheet" href="./styles/colors.css">
+  <link rel="stylesheet" href="./styles/footer.css">
+  <link rel="icon" type="image/png" href="./assets/navLogo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+  <div id="navbar"></div>
+  <div id="cart-container">
+    <h1>Your Basket</h1>
+
+    <div id="top-band">
+      <div class="">
+        <div class=""><span class="">Subtotal <span class="item-count"></span>:&nbsp;</span><span
+            class="subtotal"></span></div>
+        <div class="">
+          <span class="">Savings:&nbsp;</span><span id="savings"></span>
+        </div>
+      </div>
+      <div class=""><button color="rossoCorsa" pattern="filled" class="">Checkout</button></div>
+    </div>
+
+    <div id="cart-items">
+      <!-- Cart items will be dynamically rendered here -->
+    </div>
+    <div id="cart-total">
+      <h3>Total: <span id="total-price">₹0</span></h3>
+    </div>
+  </div>
+
+
+  <div id="footer-container"></div>
+
+</body>
+<script src="./scripts/cart.js"></script>
+<script src="./scripts/navbar.js"></script>
+<script src="./scripts/footer.js"></script>
+
+</html>
