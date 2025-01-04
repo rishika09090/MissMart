@@ -51,6 +51,26 @@ document.getElementById("navbar").innerHTML = `<nav id="nav">
     </div>
 </nav>
 <div id="dropdown"></div>
+    <!-- Login/Signup Modal -->
+    <div id="login-modal">
+        <div id="modal-content">
+            <button id="close-modal">&times;</button>
+            <div id="form-section">
+                <h2>Login/Sign up</h2>
+                <form id="login-form">
+                    <label for="user-input">Enter Phone number / Email Id</label>
+                    <input type="text" id="user-input" placeholder="Phone number / Email Id">
+                    <input type="password" name="" id="password" placeholder="Password">
+                    <button type="submit">Continue</button>
+                </form>
+                <p>
+                    By continuing, I accept the
+                    <a href="#">Terms and Conditions</a> & <a href="#">Privacy Policy</a>.
+                    This site is protected by reCAPTCHA and the Google - Privacy Policy and & Terms of Service apply.
+                </p>
+            </div>
+        </div>
+    </div>
 `
 
 document.getElementById('cart-btn').addEventListener('click', function() {
@@ -191,17 +211,147 @@ if (navbar) {
 
       }
     
-      // Initialize dropdown on button click
-    //   document.querySelector('#shop-by-category-btn button').addEventListener('click', async () => {
-    //     if (dropdown.style.display === 'none' || !dropdown.style.display) {
-    //       dropdown.style.display = 'block';
-    
-    //       // Fetch data and create dropdown
-    //       const data = await loadCategories();
-    //       dropdown.innerHTML = ''; // Clear existing content
-    //       createDropdown(data, dropdown);
-    //     } else {
-    //       dropdown.style.display = 'none';
-    //     }
-    //   });
+      const loginBtn = document.getElementById('login-btn');
+      const loginModal = document.getElementById('login-modal');
+      const closeModal = document.getElementById('close-modal');
+      const body = document.body;
+  
+      loginBtn.addEventListener('click', () => {
+          console.log("huuo")
+          loginModal.classList.add('active');
+          body.classList.add('modal-active');
+      });
+  
+      closeModal.addEventListener('click', () => {
+          loginModal.classList.remove('active');
+          body.classList.remove('modal-active');
+      });
+  
+      loginModal.addEventListener('click', (e) => {
+          if (e.target === loginModal) {
+              loginModal.classList.remove('active');
+              body.classList.remove('modal-active');
+          }
+      });
+  
+  
+      const form = document.getElementById('login-form');
+  
+      form.addEventListener('submit', function (event) {
+          event.preventDefault(); 
+          console.log(event)
+          const username = document.getElementById('user-input').value;
+          const password = document.getElementById('password').value;
+  
+          console.log('Username:', username, 'Password:', password);
+  
+  
+          fetch("https://bubbly-adorable-hose.glitch.me/users")
+              .then((response) => {
+                  if (!response.ok) {
+                      throw new Error(`HTTP error! status: ${response.status}`);
+                  }
+                  return response.json();
+              })
+              .then((data) => {
+                  console.log('Response:', data);
+                  let userExists = false;
+                  data.forEach(user => {
+                      if (user.username === username && user.password === password) {
+                          alert("login successful!");
+                          localStorage.setItem("username", username);
+                          localStorage.setItem("password", password);
+                          closeModal.dispatchEvent(new Event('click'));
+                          updateLoginButton();
+                          userExists = true;
+                          window.location.reload();
+                          return;
+                      }
+                      else if (user.username === username && user.password !== password) {
+                          alert("Incorrect password!")
+                          userExists = true;
+                          return;
+                      }
+                  })
+                  if (!userExists) {
+                      fetch('https://bubbly-adorable-hose.glitch.me/users', {
+                          method: 'POST', // HTTP method
+                          headers: {
+                              'Content-Type': 'application/json', // Specify the content type
+                          },
+                          body: JSON.stringify({
+                              username,
+                              password,
+                          }), // Convert your data to JSON
+                      })
+                          .then((response) => {
+                              if (!response.ok) {
+                                  throw new Error(`HTTP error! status: ${response.status}`);
+                              }
+                              return response.json(); 
+                          })
+                          .then((data) => {
+                              console.log('Response:', data); 
+                              localStorage.setItem("username", username);
+                              localStorage.setItem("password", password);
+                              alert("Signup Successful!")
+                              closeModal.dispatchEvent(new Event('click'));
+                              updateLoginButton();
+                          })
+                          .catch((error) => {
+                              console.error('Error:', error); 
+                          });
+                  }
+              })
+              .catch((error) => {
+                  console.error(error);
+              })
+  
+  
+  
+  
+      });
+  
+      const loginButton = document.getElementById('login-btn');
+  
+      function updateLoginButton() {
+          const username = localStorage.getItem('username');
+          const password = localStorage.getItem('password');
+  
+          if (username && password) {
+              loginButton.textContent = 'Logout';
+              loginButton.onclick = logout;
+          } else {
+              loginButton.textContent = 'Login/Sign Up';
+              loginButton.onclick = null;
+              loginButton.addEventListener('click', () => {
+                  console.log("huuo")
+                  loginModal.classList.add('active');
+                  body.classList.add('modal-active');
+              });
+  
+              closeModal.addEventListener('click', () => {
+                  loginModal.classList.remove('active');
+                  body.classList.remove('modal-active');
+              });
+  
+              loginModal.addEventListener('click', (e) => {
+                  if (e.target === loginModal) {
+                      loginModal.classList.remove('active');
+                      body.classList.remove('modal-active');
+                  }
+              });
+          }
+      }
+  
+      function logout() {
+          localStorage.removeItem('username');
+          localStorage.removeItem('password');
+          alert('You have been logged out.');
+  
+          updateLoginButton(); 
+          window.location.reload();
+        }
+  
+      updateLoginButton();
 }   

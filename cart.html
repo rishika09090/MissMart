@@ -20,22 +20,27 @@
     <h1>Your Basket</h1>
 
     <div id="top-band">
-      <div class="">
-        <div class=""><span class="">Subtotal <span class="item-count"></span>:&nbsp;</span><span
-            class="subtotal"></span></div>
-        <div class="">
-          <span class="">Savings:&nbsp;</span><span id="savings"></span>
+      <div>
+        <div><span>Subtotal (<span id="item-count"></span> Items) : </span><span
+            id="subtotal-top"></span></div>
+        <div>
+          <span>Savings:&nbsp;</span><span id="total-savings"></span>
         </div>
       </div>
-      <div class=""><button color="rossoCorsa" pattern="filled" class="">Checkout</button></div>
+      <div><button color="rossoCorsa" pattern="filled">Checkout</button></div>
     </div>
-
+    <div id="col-headings">
+      <div>Items</div>
+      <div>Quantity</div>
+      <div>Sub-total</div>
+    </div>
     <div id="cart-items">
       <!-- Cart items will be dynamically rendered here -->
     </div>
     <div id="cart-total">
       <h3>Total: <span id="total-price">₹0</span></h3>
     </div>
+
   </div>
 
 

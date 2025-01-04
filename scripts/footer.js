@@ -4,7 +4,7 @@ function injectFooter() {
       <div id="footer">
         <div class="footer-content">
           <!-- Logo and About Section -->
-          <div class="footer-section about">
+          <div class="footer-section">
             <img src="./assets/logo.png" alt="Miss Mart Logo" class="footer-logo">
             <h2>Miss Mart</h2>
             <h3> Where Fresh Meets Fabulous!! </h3>
@@ -12,7 +12,7 @@ function injectFooter() {
           </div>
   
           <!-- Popular Categories Section -->
-          <div class="footer-section categories">
+          <div class="footer-section ">
             <h3>Popular Categories</h3>
             <ul>
               <li>Sunflower Oils</li>
