@@ -243,3 +243,9 @@ body {
     font-weight: 700;
     /* white-space: nowrap;  */
 }
+
+#navbar{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}

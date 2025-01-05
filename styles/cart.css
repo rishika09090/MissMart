@@ -146,3 +146,9 @@ body {
     color: var(--color-green-accent);
     /* font-weight: 600; */
   }
+
+  #navbar{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
