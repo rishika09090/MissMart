@@ -1,6 +1,6 @@
 document.getElementById("navbar").innerHTML = `<nav id="nav">
     <div id="top-nav">
-        <a href="/" style="display: block; text-decoration: none;">
+        <a href="index.html" style="display: block; text-decoration: none;">
 
             <div id="logo">
                 <div>
