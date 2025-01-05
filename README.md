@@ -62,7 +62,8 @@ Welcome to **Miss Mart**, a fully functional e-commerce platform inspired by **B
   - **json-server**: A mock REST API for managing products, users, and carts.  
 
 - **Deployment**:  
-  - Hosted using **Glitch** for live access.
+  - Hosted backend JSon Server using **Glitch** for live access.
+  - Hosted frontend using **GitHub** for live access.
 
 ---
 
