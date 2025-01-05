@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MissMart</title>
+    <title>MissMart - Products</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="./assets/navLogo.png">
     <link rel="stylesheet" href="./styles/colors.css">
@@ -19,12 +19,28 @@
     <div class="container">
         <!-- Breadcrumb Navigation -->
         <div class="breadcrumb">
-            <a href="#">Home</a>
+            <a href="#">Home > </a>
         </div>
         <hr>
+
         <!-- Page Title and Count -->
         <div class="page-header">
             <h1></h1>
+        </div>
+
+        <!-- Sorting Section -->
+        <div class="sorting-section">
+            <label for="sort-options">Sort By: </label>
+            <select id="sort-options">
+                <option value="rating-high-low">Rating: High to Low</option>
+                <option value="rating-low-high">Rating: Low to High</option>
+                <option value="price-low-high">Price: Low to High</option>
+                <option value="price-high-low">Price: High to Low</option>
+                <option value="saving-high-low">Saving: High to Low</option>
+                <option value="saving-low-high">Saving: Low to High</option>
+                <option value="percent-off-high-low">% Off: High to Low</option>
+                <option value="percent-off-low-high">% Off: Low to High</option>
+            </select>
         </div>
 
         <div class="main-content">
@@ -57,11 +73,9 @@
             </div>
         </div>
     </div>
-    <!-- <div id="footer-container"></div> -->
 
 </body>
 <script src="./scripts/products.js"></script>
 <script src="./scripts/navbar.js"></script>
-<script src="./scripts/footer.js"></script>
 
 </html>

@@ -1,4 +1,12 @@
-fetch('https://bubbly-adorable-hose.glitch.me/beverages-tea')
+let url = "https://bubbly-adorable-hose.glitch.me/products/"
+let products = [];
+// Access the search parameters
+let params = new URLSearchParams(new URL(window.location.href).search);
+
+let category = params.get('category');
+let sort = params.get('sort');
+
+fetch(url)
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -6,24 +14,54 @@ fetch('https://bubbly-adorable-hose.glitch.me/beverages-tea')
         return response.json(); // Parse the response JSON
     })
     .then(data => {
-        console.log(data); // Handle the JSON data
+        products = data.filter(product =>
+            product.category.tlc_slug === (category) ||
+            product.category.mlc_slug === category ||
+            product.category.llc_slug.includes(category) ||
+            product.brand.slug === (category)
+        );
         const pageTitle = document.querySelector('.page-header h1');
-        pageTitle.textContent = data.screen_info.title + " (" + data.tabs[0].product_info.total_count + ")";
+        pageTitle.textContent = products[0].category.mlc_name;
         const breadcrumb = document.querySelector('.breadcrumb');
-        data.tabs[0].bread_crumbs.forEach(bread_crumb => {
+        // Create breadcrumb using category levels
+        const categoryLevels = [
+            { name: products[0].category.tlc_name, slug: products[0].category.tlc_slug },
+            { name: products[0].category.mlc_name, slug: products[0].category.mlc_slug }
+        ];
+
+        // Generate breadcrumb links
+        categoryLevels.forEach((level, index) => {
             const anchor = document.createElement("a");
-            anchor.innerText = " > " + bread_crumb.name;
+            anchor.innerText = level.name;
+            anchor.href = `products.html?category=${encodeURIComponent(level.slug)}`; // Pass category slug as query param
+
+            // Append the ' > ' separator for all except the last item
+            if (index !== 0) breadcrumb.appendChild(document.createTextNode(" > "));
             breadcrumb.appendChild(anchor);
         });
 
-        createProductCards(data.tabs[0].product_info.products);
+
+        products = sortProducts(products, "rating-high-low");
+
+        createProductCards(products);
     })
     .catch(error => {
         console.error('There was an error fetching the data:', error);
     });
 
+// Event listener for sorting dropdown change
+const sortSelect = document.getElementById('sort-options');
+sortSelect.addEventListener('change', (event) => {
+    const selectedSort = event.target.value;
+    // Apply sorting without reloading the page
+    const sortedData = sortProducts(products, selectedSort);
+    createProductCards(sortedData);
+});
+
+// Function to create product cards
 function createProductCards(products) {
     const grid = document.getElementById("product-grid");
+    grid.innerHTML = ''; // Clear existing cards
 
     // Fetch logged-in user's data from localStorage
     const loggedInUsername = localStorage.getItem('username');
@@ -54,12 +92,24 @@ function createProductCards(products) {
 
     // Function to create individual product cards
     function createCard(product, userCart = []) {
+
         // Check if the product is already in the cart
         const cartItem = userCart.find(item => item?.product?.id === product.id);
         let quantity = cartItem ? cartItem.quantity : 0;
 
         const card = document.createElement("div");
         card.classList.add("product-card");
+
+        // Discount ribbon
+        const mrp = parseInt(product.pricing.discount.mrp);
+        const sp = parseInt(product.pricing.discount.prim_price.sp);
+        if (mrp > sp) {
+            const discountRibbon = document.createElement("div");
+            discountRibbon.classList.add("discount-ribbon");
+            const discountPercentage = Math.round(((mrp - sp) / mrp) * 100);
+            discountRibbon.textContent = `${discountPercentage}% OFF`;
+            card.appendChild(discountRibbon);
+        }
 
         // Product image
         const img = document.createElement("img");
@@ -122,6 +172,14 @@ function createProductCards(products) {
 
         card.appendChild(prices);
 
+        // Money saved message
+        const moneySaved = document.createElement("div");
+        moneySaved.classList.add("money-saved");
+        const savedAmount = product.pricing.discount.mrp - product.pricing.discount.prim_price.sp;
+        moneySaved.textContent = `You save: ₹${savedAmount.toFixed(2)}`;
+        moneySaved.style.color = "green";
+        card.appendChild(moneySaved);
+
         // Save button
         const saveBtn = document.createElement("button");
         saveBtn.classList.add("save-btn");
@@ -132,17 +190,16 @@ function createProductCards(products) {
         saveBtn.appendChild(bookmarkIcon);
         card.appendChild(saveBtn);
 
-        // Add to Cart functionality
+        // Add to Cart button
         const cartBtn = document.createElement("button");
         cartBtn.classList.add("cart-btn");
 
         // If the item is in the cart, show plus-minus buttons, otherwise show "Add to Cart"
         if (quantity > 0) {
-            cartBtn.innerHTML = ` 
-                <button class="decrease-btn">-</button>
+            cartBtn.innerHTML =
+                `<button class="decrease-btn">-</button>
                 <span class="quantity">${quantity}</span>
-                <button class="increase-btn">+</button>
-            `;
+                <button class="increase-btn">+</button>`;
         } else {
             cartBtn.textContent = "Add to Cart";
         }
@@ -150,38 +207,48 @@ function createProductCards(products) {
         // Update cart button UI
         const updateCartUI = () => {
             if (quantity > 0) {
-                cartBtn.innerHTML = ` 
-                    <button class="decrease-btn">-</button>
+                cartBtn.innerHTML =
+                    `<button class="decrease-btn">-</button>
                     <span class="quantity">${quantity}</span>
-                    <button class="increase-btn">+</button>
-                `;
+                    <button class="increase-btn">+</button>`;
             } else {
                 cartBtn.textContent = "Add to Cart";
             }
 
             // Attach event listeners
-            const decreaseBtn = cartBtn.querySelector(".decrease-btn");
-            const increaseBtn = cartBtn.querySelector(".increase-btn");
+            const decreaseBtn = cartBtn?.querySelector(".decrease-btn");
+            const increaseBtn = cartBtn?.querySelector(".increase-btn");
 
-            decreaseBtn.addEventListener("click", () => {
+            decreaseBtn?.addEventListener("click", () => {
                 if (quantity > 1) {
                     quantity--;
                     updateCartAPI(product.id, quantity);
                     updateCartUI();
                 } else {
                     // Remove item from cart if quantity becomes zero
+                    cartBtn.innerHTML = "";
+                    cartBtn.textContent = "Add to Cart";
                     removeProductFromCartAPI(product.id);
                     quantity = 0; // Set quantity to 0
                     updateCartUI();
                 }
             });
 
-            increaseBtn.addEventListener("click", () => {
+            increaseBtn?.addEventListener("click", () => {
                 quantity++;
                 updateCartAPI(product.id, quantity);
                 updateCartUI();
             });
         };
+
+        // Event listener for "Add to Cart"
+        cartBtn.addEventListener("click", () => {
+            if (quantity === 0) {
+                quantity = 1; // Set quantity to 1 for the first time adding to cart
+                updateCartAPI(product.id, quantity);
+                updateCartUI(); // Update the button to reflect the new quantity
+            }
+        });
 
         // API function to update cart (storing entire product object)
         const updateCartAPI = async (productId, quantity) => {
@@ -290,13 +357,12 @@ function createProductCards(products) {
                 });
 
                 if (!updateResponse.ok) {
-                    console.error('Failed to remove product from cart');
+                    console.error('Failed to update cart');
                     alert('There was an error removing the product from your cart.');
                     return;
                 }
 
                 alert('Product removed from cart successfully!');
-                updateCartUI(); // Update the cart button UI to reflect changes
 
             } catch (error) {
                 console.error('Error removing product from cart:', error);
@@ -304,17 +370,43 @@ function createProductCards(products) {
             }
         };
 
-        cartBtn.addEventListener("click", () => {
-            if (quantity === 0) {
-                quantity = 1;
-            }
-            updateCartAPI(product.id, quantity);
-            updateCartUI();
-        });
+        updateCartUI();
+        card.appendChild(cartBtn)
+        grid.appendChild(card)
+        return card;
+    }
 
-        card.appendChild(cartBtn);
+}
 
-        // Append card to grid
-        grid.appendChild(card);
+// Function to sort products based on selected criteria
+function sortProducts(products, criteria) {
+    switch (criteria) {
+        case "rating-high-low":
+            return products.sort((a, b) => parseFloat(b.rating_info.avg_rating) - parseFloat(a.rating_info.avg_rating));
+        case "rating-low-high":
+            return products.sort((a, b) => parseFloat(a.rating_info.avg_rating) - parseFloat(b.rating_info.avg_rating));
+        case "price-low-high":
+            return products.sort((a, b) => parseFloat(a.pricing.discount.prim_price.sp) - parseFloat(b.pricing.discount.prim_price.sp));
+        case "price-high-low":
+            return products.sort((a, b) => parseFloat(b.pricing.discount.prim_price.sp) - parseFloat(a.pricing.discount.prim_price.sp));
+        case "saving-high-low":
+            return products.sort((a, b) => (parseFloat(b.pricing.discount.mrp) - parseFloat(b.pricing.discount.prim_price.sp)) - (parseFloat(a.pricing.discount.mrp) - parseFloat(a.pricing.discount.prim_price.sp)));
+        case "saving-low-high":
+            return products.sort((a, b) => (parseFloat(a.pricing.discount.mrp) - parseFloat(a.pricing.discount.prim_price.sp)) - (parseFloat(b.pricing.discount.mrp) - parseFloat(b.pricing.discount.prim_price.sp)));
+        case "percent-off-high-low":
+            return products.sort((a, b) =>
+                ((parseFloat(b.pricing.discount.mrp) - parseFloat(b.pricing.discount.prim_price.sp)) / parseFloat(b.pricing.discount.mrp)) -
+                ((parseFloat(a.pricing.discount.mrp) - parseFloat(a.pricing.discount.prim_price.sp)) / parseFloat(a.pricing.discount.mrp))
+            );
+        case "percent-off-low-high":
+            return products.sort((a, b) =>
+                ((parseFloat(a.pricing.discount.mrp) - parseFloat(a.pricing.discount.prim_price.sp)) / parseFloat(a.pricing.discount.mrp)) -
+                ((parseFloat(b.pricing.discount.mrp) - parseFloat(b.pricing.discount.prim_price.sp)) / parseFloat(b.pricing.discount.mrp))
+            );
+        default:
+            return products;
     }
 }
+
+
+

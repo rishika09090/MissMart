@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     cart.forEach((item) => {
       const product = item.product;
       const quantity = item.quantity;
-      console.log(product)
       const sp = parseFloat(product.pricing.discount.prim_price.sp); // Selling price
       const mrp = parseFloat(product.pricing.discount.mrp);
       const saving = (mrp - sp) * quantity;
@@ -90,7 +89,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Remove product if quantity becomes 0
         if (product.quantity <= 0) {
-          console.log(`Removing product with ID: ${productId}`);
           return false; // Exclude this product from the updated cart
         }
       }
@@ -99,9 +97,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Call the updateCart function to persist changes
     updateCart(user);
-
-    console.log(user);
-    console.log(`Update product ${productId} quantity by ${delta}`);
     // Call another API here to update the cart in the backend, if needed
   };
 

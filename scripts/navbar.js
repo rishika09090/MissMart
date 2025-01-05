@@ -94,7 +94,6 @@ if (navbar) {
         });
 
     const categoryList = document.getElementById('category-list');
-    console.log(categoryList)
     // Function to display the first 5 categories and add the dropdown button
     function displayInitialCategories(data) {
         const initialCategories = data.slice(0, 5); // First 5 categories
@@ -160,10 +159,13 @@ if (navbar) {
         const categoryItem = document.createElement('div');
         categoryItem.classList.add('category-item');
         categoryItem.textContent = category.display_name;
-
         // Add click event to navigate to the URL
         categoryItem.addEventListener('click', () => {
-            window.open(category.url, '_blank'); // Open link in a new tab
+            const categoryParams = new URLSearchParams({
+                category: category.url.split('/').pop()
+            });
+            const targetUrl = `products.html?${categoryParams.toString()}`;
+            window.location.href = targetUrl; // Redirect to products.html with query parameters
         });
 
         return categoryItem;
@@ -217,7 +219,6 @@ if (navbar) {
       const body = document.body;
   
       loginBtn.addEventListener('click', () => {
-          console.log("huuo")
           loginModal.classList.add('active');
           body.classList.add('modal-active');
       });
@@ -239,11 +240,9 @@ if (navbar) {
   
       form.addEventListener('submit', function (event) {
           event.preventDefault(); 
-          console.log(event)
           const username = document.getElementById('user-input').value;
           const password = document.getElementById('password').value;
   
-          console.log('Username:', username, 'Password:', password);
   
   
           fetch("https://bubbly-adorable-hose.glitch.me/users")
@@ -254,7 +253,6 @@ if (navbar) {
                   return response.json();
               })
               .then((data) => {
-                  console.log('Response:', data);
                   let userExists = false;
                   data.forEach(user => {
                       if (user.username === username && user.password === password) {
@@ -291,7 +289,6 @@ if (navbar) {
                               return response.json(); 
                           })
                           .then((data) => {
-                              console.log('Response:', data); 
                               localStorage.setItem("username", username);
                               localStorage.setItem("password", password);
                               alert("Signup Successful!")
@@ -325,7 +322,6 @@ if (navbar) {
               loginButton.textContent = 'Login/Sign Up';
               loginButton.onclick = null;
               loginButton.addEventListener('click', () => {
-                  console.log("huuo")
                   loginModal.classList.add('active');
                   body.classList.add('modal-active');
               });

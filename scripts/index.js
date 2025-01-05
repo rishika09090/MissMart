@@ -55,8 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const leftArrowSmartBasket = document.querySelector('.view-all-arrow-button-left');
     const rightArrowSmartBasket = document.querySelector('.view-all-arrow-button-right');
     const viewAllButton = document.getElementById('view-all');
-    console.log(leftArrowSmartBasket)
-    console.log(rightArrowSmartBasket)
 
     const apiUrl = 'https://bubbly-adorable-hose.glitch.me/items';
     let allItems = [];
@@ -123,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     viewAllButton.addEventListener('click', () => {
-        console.log('View All clicked');
         displayAllSmartBasketItems();
     });
     function displayAllSmartBasketItems() {
