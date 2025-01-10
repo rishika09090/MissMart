@@ -148,8 +148,17 @@ input {
     gap: 5px;
 }
 
-#orderSummary > div > div:nth-child(4) {
+#orderSummary > div > div:nth-child(3) {
     color: var(--color-green-accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#orderSummary > div > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #orderSummary > div > span {
