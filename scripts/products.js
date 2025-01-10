@@ -14,12 +14,38 @@ fetch(url)
         return response.json(); // Parse the response JSON
     })
     .then(data => {
-        products = data.filter(product =>
-            product.category.tlc_slug === (category) ||
-            product.category.mlc_slug === category ||
-            product.category.llc_slug.includes(category) ||
-            product.brand.slug === (category)
-        );
+        console.log(data)
+        function searchInObject(obj, searchString) {
+            // Split the input string into words
+            const searchWords = searchString.toLowerCase().split(' ');
+        
+            // Helper function to recursively search the object
+            function searchRecursive(obj) {
+                for (let key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        const value = obj[key];
+        
+                        // If the value is an object, search recursively
+                        if (typeof value === 'object' && value !== null) {
+                            if (searchRecursive(value)) return true;
+                        }
+                        // If the value is a string, check if any search word is present
+                        else if (typeof value === 'string') {
+                            const lowerValue = value.toLowerCase();
+                            if (searchWords.some(word => lowerValue.includes(word))) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        
+            // Start the recursive search
+            return searchRecursive(obj);
+        }
+        products = data.filter(product => searchInObject(product, category));
+        console.log(products)
         const pageTitle = document.querySelector('.page-header h1');
         pageTitle.textContent = products[0].category.mlc_name;
         const breadcrumb = document.querySelector('.breadcrumb');
@@ -406,6 +432,8 @@ function sortProducts(products, criteria) {
         default:
             return products;
     }
+
+
 }
 
 

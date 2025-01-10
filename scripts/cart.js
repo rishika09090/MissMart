@@ -125,4 +125,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initialize cart
   getCartData();
+
+  document.getElementById('checkoutButton').addEventListener('click', function() {
+    window.location.href = 'checkout.html';
+  });
 });

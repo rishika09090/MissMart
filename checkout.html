@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/checkout.css">
+    <link rel="stylesheet" href="./styles/navbar.css">
+    <link rel="stylesheet" href="./styles/colors.css">
+    <link rel="stylesheet" href="./styles/footer.css">
+    <link rel="icon" type="image/png" href="./assets/navLogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <title>MissMart</title>
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <div class="checkout-container">
+        <h1>Checkout</h1>
+        <hr>
+        <div class="tabs">
+            <button class="tab-link active" onclick="openTab(event, 'address-tab')">Address</button>
+            <button class="tab-link" onclick="openTab(event, 'delivery-tab')" disabled>Delivery Options</button>
+            <button class="tab-link" onclick="openTab(event, 'payment-tab')" disabled>Payment</button>
+        </div>
+
+        <div id="address-tab" class="tab-content">
+            <div>
+                <h2 id="addressHeading">Address Details</h2>
+                <form id="address-form">
+                    <div class="form-row">
+                        <label>
+                            <span>Name <span class="required">*</span></span>
+                            <input type="text" id="name" placeholder="Enter your name" required>
+                        </label>
+                        <label>
+                            <span>Mobile Number <span class="required">*</span></span>
+                            <input type="tel" id="mobile" placeholder="Enter your mobile number" required>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <span>State <span class="required">*</span></span>
+                            <input type="text" id="state" placeholder="Enter your state" required>
+                            <ul id="state-suggestions"></ul>
+                        </label>
+                        <label>
+                            <span>City <span class="required">*</span></span>
+                            <input type="text" id="city" placeholder="Start typing your city">
+                            <ul id="city-suggestions"></ul>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <span>Area <span class="required">*</span></span>
+                            <input type="text" id="area" placeholder="Enter your area" required>
+                        </label>
+                        <label>
+                            <span>Landmark</span>
+                            <input type="text" id="landmark" placeholder="Enter landmark (optional)">
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <span>House Number <span class="required">*</span></span>
+                            <input type="text" id="house" placeholder="Enter your house number" required>
+                        </label>
+                        <label>
+                            <span>Pincode <span class="required">*</span></span>
+                            <input type="text" id="pincode" placeholder="Enter your pincode" required>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <h2 id="addressType">Address Type:</h2>
+                            <div id="address-type">
+                                <label>Home<input type="radio" name="address-type" value="home" required> </label>
+                                <label>Office<input type="radio" name="address-type" value="office"> </label>
+                                <label>Other<input type="radio" name="address-type" value="other"> </label>
+                            </div>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <div id="orderSummary">
+                <div>
+                    <h2>
+                        Order Summary
+                    </h2>
+                    <hr>
+                    <div>
+                        <h4>Total Amount Payable</h4>
+                        <div id="billAmount"> </div>
+                    </div>
+                    <div>
+                        <h4> Total Savings </h4>
+                        <div id="savings"> </div>
+                    </div>
+
+                    <span>
+                        Select your address and delivery slot to know accurate delivery charges. You can save more by
+                        applying a voucher!
+                    </span>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="next-to-delivery" disabled>Next</button>
+
+        <div id="delivery-tab" class="tab-content hidden">
+            <h2>Delivery Options</h2>
+            <p>Coming Soon...</p>
+        </div>
+
+        <div id="payment-tab" class="tab-content hidden">
+            <h2>Payment</h2>
+            <p>Coming Soon...</p>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+
+</body>
+<script src="scripts/checkout.js"></script>
+<script src="./scripts/navbar.js"></script>
+<script src="./scripts/footer.js"></script>
+
+</html>
