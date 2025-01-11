@@ -5,15 +5,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const subtotalTopElement = document.getElementById("subtotal-top");
   const totalSavingsElement = document.getElementById("total-savings");
   let user;
-  // Mock API Call: Replace with your actual API endpoint
+  
   const getUserDetails = async (username) => {
-    // Replace with actual API call
+    
     return fetch("https://bubbly-adorable-hose.glitch.me/users")
       .then((response) => response.json())
       .then((data) => data.find((user) => user.username === username));
   };
 
-  // Fetch cart data for the logged-in user
+  
   const getCartData = async () => {
     const username = localStorage.getItem("username");
     if (!username) {
@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderCart(user.cart);
   };
 
-  // Render cart items
+  
   const renderCart = (cart) => {
-    cartContainer.innerHTML = ""; // Clear existing cart
+    cartContainer.innerHTML = ""; 
 
     let total = 0;
     let totalsaving = 0;
@@ -41,14 +41,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     cart.forEach((item) => {
       const product = item.product;
       const quantity = item.quantity;
-      const sp = parseFloat(product.pricing.discount.prim_price.sp); // Selling price
+      const sp = parseFloat(product.pricing.discount.prim_price.sp); 
       const mrp = parseFloat(product.pricing.discount.mrp);
       const saving = (mrp - sp) * quantity;
       totalsaving += saving;
-      const subtotal = sp * quantity; // Calculate subtotal for the product
-      total += subtotal; // Add subtotal to the total price
+      const subtotal = sp * quantity; 
+      total += subtotal; 
 
-      // Create a cart item element
+      
       const cartItem = document.createElement("div");
       cartItem.classList.add("cart-item");
 
@@ -74,30 +74,30 @@ document.addEventListener("DOMContentLoaded", async () => {
       cartContainer.appendChild(cartItem);
     });
 
-    // Update total price
+    
     totalSavingsElement.textContent = `₹${totalsaving.toFixed(2)}`;
     subtotalTopElement.textContent = `₹${total.toFixed(2)}`;
     totalPriceElement.textContent = `₹${total.toFixed(2)}`;
   };
 
-  // Update item quantity
+  
   window.updateQuantity = (productId, delta) => {
-    // Logic to update quantity and re-render cart
+    
     user.cart = user.cart.filter(product => {
       if (product.product.id === productId) {
         product.quantity += delta;
 
-        // Remove product if quantity becomes 0
+        
         if (product.quantity <= 0) {
-          return false; // Exclude this product from the updated cart
+          return false; 
         }
       }
-      return true; // Keep all other products
+      return true; 
     });
 
-    // Call the updateCart function to persist changes
+    
     updateCart(user);
-    // Call another API here to update the cart in the backend, if needed
+    
   };
 
   async function updateCart(user) {
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
 
-  // Initialize cart
+  
   getCartData();
 
   document.getElementById('checkoutButton').addEventListener('click', function() {

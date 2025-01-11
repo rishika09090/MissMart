@@ -160,7 +160,6 @@ input {
 }
 
 .orderSummary>div>span {
-    /* width: 50%; */
     margin: auto;
     font-size: 13px;
     background-color: var(--color-green-light);

@@ -1,6 +1,6 @@
 let url = "https://bubbly-adorable-hose.glitch.me/products/"
 let products = [];
-// Access the search parameters
+
 let params = new URLSearchParams(new URL(window.location.href).search);
 
 let category = params.get('category');
@@ -11,25 +11,25 @@ fetch(url)
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json(); // Parse the response JSON
+        return response.json(); 
     })
     .then(data => {
         console.log(data)
         function searchInObject(obj, searchString) {
-            // Split the input string into words
+            
             const searchWords = searchString.toLowerCase().split(' ');
-        
-            // Helper function to recursively search the object
+
+            
             function searchRecursive(obj) {
                 for (let key in obj) {
                     if (obj.hasOwnProperty(key)) {
                         const value = obj[key];
-        
-                        // If the value is an object, search recursively
+
+                        
                         if (typeof value === 'object' && value !== null) {
                             if (searchRecursive(value)) return true;
                         }
-                        // If the value is a string, check if any search word is present
+                        
                         else if (typeof value === 'string') {
                             const lowerValue = value.toLowerCase();
                             if (searchWords.some(word => lowerValue.includes(word))) {
@@ -40,28 +40,28 @@ fetch(url)
                 }
                 return false;
             }
-        
-            // Start the recursive search
+
+            
             return searchRecursive(obj);
         }
         products = data.filter(product => searchInObject(product, category));
         console.log(products)
         const pageTitle = document.querySelector('.page-header h1');
-        pageTitle.textContent = products[0].category.mlc_name;
+        pageTitle.textContent = products[0]?.category.mlc_name;
         const breadcrumb = document.querySelector('.breadcrumb');
-        // Create breadcrumb using category levels
+        
         const categoryLevels = [
-            { name: products[0].category.tlc_name, slug: products[0].category.tlc_slug },
-            { name: products[0].category.mlc_name, slug: products[0].category.mlc_slug }
+            { name: products[0]?.category.tlc_name, slug: products[0]?.category.tlc_slug },
+            { name: products[0]?.category.mlc_name, slug: products[0]?.category.mlc_slug }
         ];
 
-        // Generate breadcrumb links
+        
         categoryLevels.forEach((level, index) => {
             const anchor = document.createElement("a");
             anchor.innerText = level.name;
-            anchor.href = `products.html?category=${encodeURIComponent(level.slug)}`; // Pass category slug as query param
+            anchor.href = `products.html?category=${encodeURIComponent(level.slug)}`; 
 
-            // Append the ' > ' separator for all except the last item
+            
             if (index !== 0) breadcrumb.appendChild(document.createTextNode(" > "));
             breadcrumb.appendChild(anchor);
         });
@@ -75,58 +75,74 @@ fetch(url)
         console.error('There was an error fetching the data:', error);
     });
 
-// Event listener for sorting dropdown change
+
 const sortSelect = document.getElementById('sort-options');
 sortSelect.addEventListener('change', (event) => {
     const selectedSort = event.target.value;
-    // Apply sorting without reloading the page
+    
     const sortedData = sortProducts(products, selectedSort);
     createProductCards(sortedData);
 });
 
-// Function to create product cards
+
 function createProductCards(products) {
     const grid = document.getElementById("product-grid");
-    grid.innerHTML = ''; // Clear existing cards
+    grid.innerHTML = ''; 
+    if (!products || products.length === 0) {
+        grid.innerHTML = '';
 
-    // Fetch logged-in user's data from localStorage
+        
+        const noProductsImage = document.createElement('img');
+        noProductsImage.src = 'https://www.bbassets.com/bb2assets/images/png/no-search-results-found.png?tr=w-374,q-80';
+        noProductsImage.alt = 'No products found';
+        noProductsImage.style.width = '100%';
+        noProductsImage.style.maxWidth = '374px';
+        noProductsImage.style.margin = '20px auto';
+        noProductsImage.style.display = 'block';
+
+        
+        grid.appendChild(noProductsImage);
+        return;
+    }
+
+    
     const loggedInUsername = localStorage.getItem('username');
     let userCart = [];
 
-    // If the user is logged in, fetch the cart
+    
     if (loggedInUsername) {
         fetch('https://bubbly-adorable-hose.glitch.me/users')
             .then(response => response.json())
             .then(users => {
                 const user = users.find(user => user.username === loggedInUsername);
                 if (user && user.cart) {
-                    userCart = user.cart; // Set the cart data for the logged-in user
+                    userCart = user.cart; 
                 }
 
-                // Now, create product cards
+                
                 products.forEach(product => {
                     createCard(product, userCart);
                 });
             })
             .catch(error => console.error('Error fetching user data:', error));
     } else {
-        // If user is not logged in, create product cards without cart data
+        
         products.forEach(product => {
             createCard(product);
         });
     }
 
-    // Function to create individual product cards
+    
     function createCard(product, userCart = []) {
 
-        // Check if the product is already in the cart
+        
         const cartItem = userCart.find(item => item?.product?.id === product.id);
         let quantity = cartItem ? cartItem.quantity : 0;
 
         const card = document.createElement("div");
         card.classList.add("product-card");
 
-        // Discount ribbon
+        
         const mrp = parseInt(product.pricing.discount.mrp);
         const sp = parseInt(product.pricing.discount.prim_price.sp);
         if (mrp > sp) {
@@ -137,52 +153,52 @@ function createProductCards(products) {
             card.appendChild(discountRibbon);
         }
 
-        // Product image
+        
         const img = document.createElement("img");
         img.src = product.images[0].s;
         card.appendChild(img);
 
-        // Brand
+        
         const brand = document.createElement("div");
         brand.classList.add("brand");
         brand.textContent = product.brand.name;
         card.appendChild(brand);
 
-        // Product name
+        
         const name = document.createElement("div");
         name.classList.add("name");
         name.textContent = product.desc;
         card.appendChild(name);
 
-        // Rating Section
+        
         const ratingInfo = product.rating_info;
         if (ratingInfo.avg_rating !== null && ratingInfo.rating_count !== null) {
             const ratingContainer = document.createElement("div");
             ratingContainer.classList.add("rating");
 
-            // Star Icon
+            
             const starIcon = document.createElement("span");
-            starIcon.innerHTML = "&#9733;"; // Unicode star icon
-            starIcon.style.color = "#FFD700"; // Gold color
+            starIcon.innerHTML = "&#9733;"; 
+            starIcon.style.color = "#FFD700"; 
             starIcon.style.marginRight = "5px";
             ratingContainer.appendChild(starIcon);
 
-            // Average Rating
+            
             const averageRating = document.createElement("span");
             averageRating.textContent = ratingInfo.avg_rating;
             averageRating.style.marginRight = "10px";
             ratingContainer.appendChild(averageRating);
 
-            // Number of Ratings
+            
             const ratingCount = document.createElement("span");
             ratingCount.textContent = `(${ratingInfo.rating_count})`;
             ratingContainer.appendChild(ratingCount);
 
-            // Add rating to card
+            
             card.appendChild(ratingContainer);
         }
 
-        // Pricing
+        
         const prices = document.createElement("div");
         prices.classList.add("prices");
 
@@ -198,7 +214,7 @@ function createProductCards(products) {
 
         card.appendChild(prices);
 
-        // Money saved message
+        
         const moneySaved = document.createElement("div");
         moneySaved.classList.add("money-saved");
         const savedAmount = product.pricing.discount.mrp - product.pricing.discount.prim_price.sp;
@@ -206,21 +222,21 @@ function createProductCards(products) {
         moneySaved.style.color = "green";
         card.appendChild(moneySaved);
 
-        // Save button
+        
         const saveBtn = document.createElement("button");
         saveBtn.classList.add("save-btn");
 
-        // Font Awesome bookmark icon
+        
         const bookmarkIcon = document.createElement("i");
         bookmarkIcon.classList.add("fa", "fa-bookmark");
         saveBtn.appendChild(bookmarkIcon);
         card.appendChild(saveBtn);
 
-        // Add to Cart button
+        
         const cartBtn = document.createElement("button");
         cartBtn.classList.add("cart-btn");
 
-        // If the item is in the cart, show plus-minus buttons, otherwise show "Add to Cart"
+        
         if (quantity > 0) {
             cartBtn.innerHTML =
                 `<button class="decrease-btn">-</button>
@@ -230,7 +246,7 @@ function createProductCards(products) {
             cartBtn.textContent = "Add to Cart";
         }
 
-        // Update cart button UI
+        
         const updateCartUI = () => {
             if (quantity > 0) {
                 cartBtn.innerHTML =
@@ -241,7 +257,7 @@ function createProductCards(products) {
                 cartBtn.textContent = "Add to Cart";
             }
 
-            // Attach event listeners
+            
             const decreaseBtn = cartBtn?.querySelector(".decrease-btn");
             const increaseBtn = cartBtn?.querySelector(".increase-btn");
 
@@ -251,11 +267,11 @@ function createProductCards(products) {
                     updateCartAPI(product.id, quantity);
                     updateCartUI();
                 } else {
-                    // Remove item from cart if quantity becomes zero
+                    
                     cartBtn.innerHTML = "";
                     cartBtn.textContent = "Add to Cart";
                     removeProductFromCartAPI(product.id);
-                    quantity = 0; // Set quantity to 0
+                    quantity = 0; 
                     updateCartUI();
                 }
             });
@@ -267,16 +283,16 @@ function createProductCards(products) {
             });
         };
 
-        // Event listener for "Add to Cart"
+        
         cartBtn.addEventListener("click", () => {
             if (quantity === 0) {
-                quantity = 1; // Set quantity to 1 for the first time adding to cart
+                quantity = 1; 
                 updateCartAPI(product.id, quantity);
-                updateCartUI(); // Update the button to reflect the new quantity
+                updateCartUI(); 
             }
         });
 
-        // API function to update cart (storing entire product object)
+        
         const updateCartAPI = async (productId, quantity) => {
             const loggedInUsername = localStorage.getItem('username');
 
@@ -286,7 +302,7 @@ function createProductCards(products) {
             }
 
             try {
-                // Fetch the user data from the backend
+                
                 const userResponse = await fetch('https://bubbly-adorable-hose.glitch.me/users');
                 const users = await userResponse.json();
                 const user = users.find(user => user.username === loggedInUsername);
@@ -296,33 +312,33 @@ function createProductCards(products) {
                     return;
                 }
 
-                // Check if the user has a cart in their data (if not, create one)
+                
                 if (!user.cart) {
                     user.cart = [];
                 }
 
-                // Find the product object from the products array
+                
                 const product = products.find(p => p.id === productId);
                 if (!product) {
                     alert('Product not found!');
                     return;
                 }
 
-                // Find the existing product in the cart (if any)
+                
                 const existingProductIndex = user.cart.findIndex(item => item.product.id === productId);
 
                 if (existingProductIndex !== -1) {
-                    // If the product exists in the cart, update the quantity
+                    
                     user.cart[existingProductIndex].quantity += quantity;
                 } else {
-                    // If the product does not exist in the cart, add it with the specified quantity
+                    
                     user.cart.push({
-                        product: product,  // Store the entire product object
+                        product: product,  
                         quantity: quantity,
                     });
                 }
 
-                // Update the cart in the backend
+                
                 const updateResponse = await fetch(`https://bubbly-adorable-hose.glitch.me/users/${user.id}`, {
                     method: 'PATCH',
                     headers: {
@@ -340,7 +356,7 @@ function createProductCards(products) {
                 }
 
                 alert('Product added to cart successfully!');
-                updateCartUI(); // Update the cart button UI to reflect changes
+                updateCartUI(); 
 
             } catch (error) {
                 console.error('Error updating cart:', error);
@@ -348,7 +364,7 @@ function createProductCards(products) {
             }
         };
 
-        // Remove product from cart API
+        
         const removeProductFromCartAPI = async (productId) => {
             const loggedInUsername = localStorage.getItem('username');
 
@@ -358,7 +374,7 @@ function createProductCards(products) {
             }
 
             try {
-                // Fetch the user data from the backend
+                
                 const userResponse = await fetch('https://bubbly-adorable-hose.glitch.me/users');
                 const users = await userResponse.json();
                 const user = users.find(user => user.username === loggedInUsername);
@@ -368,10 +384,10 @@ function createProductCards(products) {
                     return;
                 }
 
-                // Remove the product from the cart
+                
                 user.cart = user.cart.filter(item => item.product.id !== productId);
 
-                // Update the cart in the backend
+                
                 const updateResponse = await fetch(`https://bubbly-adorable-hose.glitch.me/users/${user.id}`, {
                     method: 'PATCH',
                     headers: {
@@ -404,7 +420,7 @@ function createProductCards(products) {
 
 }
 
-// Function to sort products based on selected criteria
+
 function sortProducts(products, criteria) {
     switch (criteria) {
         case "rating-high-low":

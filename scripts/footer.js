@@ -1,4 +1,3 @@
-// Inject the footer dynamically
 function injectFooter() {
     const footerHTML = `
       <div id="footer">
@@ -82,6 +81,5 @@ function injectFooter() {
     footerContainer.innerHTML = footerHTML;
   }
   
-  // Inject the footer on page load
   document.addEventListener("DOMContentLoaded", injectFooter);
   

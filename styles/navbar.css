@@ -354,7 +354,7 @@ nav {
     font-size: 20px;
     color: var(--color-pink-dark);
     background-color: var(--color-green-light);
-    /* Dark pink color */
+
 }
 
 #cart-btn {
@@ -362,12 +362,12 @@ nav {
     border-radius: 5px;
 }
 
-/* Blur Effect */
+
 body.modal-active #main-content {
     filter: blur(5px);
 }
 
-/* Modal */
+
 #login-modal {
     display: none;
     position: fixed;
@@ -396,7 +396,7 @@ body.modal-active #main-content {
     text-align: center;
 }
 
-/* Close Button */
+
 #close-modal {
     position: absolute;
     top: 10px;
@@ -407,7 +407,7 @@ body.modal-active #main-content {
     cursor: pointer;
 }
 
-/* Form Section */
+
 #form-section h2 {
     margin-bottom: 20px;
 }

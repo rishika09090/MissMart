@@ -94,35 +94,35 @@ if (navbar) {
         });
 
     const categoryList = document.getElementById('category-list');
-    // Function to display the first 5 categories and add the dropdown button
+    
     function displayInitialCategories(data) {
-        const initialCategories = data.slice(0, 5); // First 5 categories
-        const remainingCategories = data.slice(5); // Remaining categories
+        const initialCategories = data.slice(0, 5); 
+        const remainingCategories = data.slice(5); 
 
-        // Append the first 5 categories
+        
         initialCategories.forEach(category => {
             const categoryItem = createCategoryElement(category);
             categoryList.appendChild(categoryItem);
         });
 
-        // Add the dropdown button
+        
         const dropdownContainer = document.createElement('div');
         dropdownContainer.classList.add('dropdown-container');
 
         const dropdownButton = document.createElement('div');
-        dropdownButton.innerHTML = '<i class="fas fa-angle-double-right"></i>'; // Add icon using Font Awesome class
+        dropdownButton.innerHTML = '<i class="fas fa-angle-double-right"></i>'; 
         dropdownButton.classList.add('category-item');
-        // dropdownButton.textContent = '\uf101'; // Unicode for double right arrow
-        dropdownButton.style.fontFamily = "Font Awesome 5 Free"; // Set Font Awesome font
-        dropdownButton.style.fontWeight = "900"; // Use appropriate font weight
+        
+        dropdownButton.style.fontFamily = "Font Awesome 5 Free"; 
+        dropdownButton.style.fontWeight = "900"; 
         dropdownButton.style.textAlign = 'center';
         dropdownButton.style.fontSize = '22px';
         dropdownButton.style.cursor = 'pointer';
 
-        // Dropdown menu for remaining categories
+        
         const dropdownMenu = document.createElement('div');
         dropdownMenu.classList.add('dropdown-menu');
-        dropdownMenu.style.display = 'none'; // Initially hidden
+        dropdownMenu.style.display = 'none'; 
         dropdownMenu.style.position = 'absolute';
         dropdownMenu.style.backgroundColor = '#fff';
         dropdownMenu.style.border = '1px solid #ddd';
@@ -130,7 +130,7 @@ if (navbar) {
         dropdownMenu.style.padding = '10px';
         dropdownMenu.style.zIndex = '10';
 
-        // Append remaining categories to the dropdown menu
+        
         remainingCategories.forEach(category => {
             const dropdownItem = createCategoryElement(category);
             dropdownItem.style.padding = '15px 10px';
@@ -140,7 +140,7 @@ if (navbar) {
             dropdownMenu.appendChild(dropdownItem);
         });
 
-        // Toggle dropdown menu visibility on click
+        
         dropdownButton.addEventListener('click', () => {
             if (dropdownMenu.style.display === 'none') {
                 dropdownMenu.style.display = 'block';
@@ -154,18 +154,18 @@ if (navbar) {
         categoryList.appendChild(dropdownContainer);
     }
 
-    // Helper function to create a category element
+    
     function createCategoryElement(category) {
         const categoryItem = document.createElement('div');
         categoryItem.classList.add('category-item');
         categoryItem.textContent = category.display_name;
-        // Add click event to navigate to the URL
+        
         categoryItem.addEventListener('click', () => {
             const categoryParams = new URLSearchParams({
                 category: category.url.split('/').pop()
             });
             const targetUrl = `products.html?${categoryParams.toString()}`;
-            window.location.href = targetUrl; // Redirect to products.html with query parameters
+            window.location.href = targetUrl; 
         });
 
         return categoryItem;
@@ -191,7 +191,7 @@ if (navbar) {
             console.error('Error loading categories:', error);
         }
     }
-    // const dropdown = document.getElementById('category-list');
+    
 
     function createDropdown(data, parent) {
         if (data) {
@@ -199,19 +199,30 @@ if (navbar) {
                 const dropdownItem = document.createElement('div');
                 dropdownItem.classList.add('dropdown-item');
                 dropdownItem.textContent = item.name;
-
+    
+                
+                dropdownItem.addEventListener('click', () => {
+                    
+                    const searchParams = new URLSearchParams();
+                    searchParams.set('category', item.slug);
+                    
+                    window.location.href = `products.html?${searchParams.toString()}`;
+                });
+    
                 if (item.children && item.children.length > 0) {
                     const childDropdown = document.createElement('div');
                     childDropdown.classList.add('dropdown-child');
                     createDropdown(item.children, childDropdown);
                     dropdownItem.appendChild(childDropdown);
                 }
-
+    
                 parent.appendChild(dropdownItem);
             });
-        } else return;
-
+        } else {
+            return;
+        }
     }
+    
 
     const loginBtn = document.getElementById('login-btn');
     const loginModal = document.getElementById('login-modal');
@@ -273,14 +284,14 @@ if (navbar) {
                 })
                 if (!userExists) {
                     fetch('https://bubbly-adorable-hose.glitch.me/users', {
-                        method: 'POST', // HTTP method
+                        method: 'POST', 
                         headers: {
-                            'Content-Type': 'application/json', // Specify the content type
+                            'Content-Type': 'application/json', 
                         },
                         body: JSON.stringify({
                             username,
                             password,
-                        }), // Convert your data to JSON
+                        }), 
                     })
                         .then((response) => {
                             if (!response.ok) {

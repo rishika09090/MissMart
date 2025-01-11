@@ -1,4 +1,4 @@
-// Tabs functionality
+
 function openTab(event, tabId) {
     const tabs = document.querySelectorAll('.tab-content');
     tabs.forEach(tab => tab.classList.add('hidden'));
@@ -11,7 +11,7 @@ function openTab(event, tabId) {
     event.currentTarget.classList.add('active');
 }
 
-// Enabling "Next" button only when all required fields are filled
+
 const form = document.getElementById('address-form');
 const nextButton = document.getElementById('next-to-delivery');
 
@@ -20,7 +20,7 @@ form.addEventListener('input', () => {
     nextButton.disabled = !allFieldsFilled;
 });
 
-// City suggestions functionality
+
 let cities = [];
 const cityInput = document.getElementById('city');
 const citySuggestions = document.getElementById('city-suggestions');
@@ -100,10 +100,10 @@ stateInput.addEventListener('input', () => {
     }
 });
 
-// Fetch cities on page load and fetch user cart
+
 window.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('https://bubbly-adorable-hose.glitch.me/cities'); // Replace with the actual API URL
+        const response = await fetch('https://bubbly-adorable-hose.glitch.me/cities'); 
         cities = await response.json();
 
         const username = localStorage.getItem("username");
@@ -112,7 +112,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // Fetch user data
+        
         const userResponse = await fetch(`https://bubbly-adorable-hose.glitch.me/users?username=${username}`);
         const users = await userResponse.json();
         if (users.length === 0) {
@@ -123,7 +123,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const user = users[0];
         const cart = user.cart || [];
 
-        // Dynamically display cart items
+        
         const cartItemsContainer = document.getElementById('cart-items');
         let totalAmount = 0;
         let totalSavings = 0;
@@ -151,7 +151,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    // Enable "Next" button for Address Tab
+    
     const addressForm = document.getElementById('address-form');
     const nextToDeliveryButton = document.getElementById('next-to-delivery');
 
@@ -160,9 +160,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         nextToDeliveryButton.disabled = !allFieldsFilled;
     });
 
-    // Handle "Next" button click in Address Tab
+    
     nextToDeliveryButton.addEventListener('click', async () => {
-        // Prepare address object
+        
         const address = {
             name: document.getElementById('name').value.trim(),
             mobile: document.getElementById('mobile').value.trim(),
@@ -182,7 +182,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            // Fetch user object
+            
             const userResponse = await fetch(`https://bubbly-adorable-hose.glitch.me/users?username=${username}`);
             const users = await userResponse.json();
             if (users.length === 0) {
@@ -192,7 +192,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
             const user = users[0];
 
-            // Update user with new address
+            
             user.address = address;
             await fetch(`https://bubbly-adorable-hose.glitch.me/users/${user.id}`, {
                 method: 'PATCH',
@@ -200,7 +200,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({ address }),
             });
 
-            // Show Delivery Options tab
+            
             document.querySelector('.tab-link.active').disabled = true;
             document.querySelector('.tab-link:nth-child(2)').disabled = false;
             openTab({ currentTarget: document.querySelector('.tab-link:nth-child(2)') }, 'delivery-tab');
@@ -209,7 +209,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Enable "Next" button for Delivery Options Tab
+    
     const deliveryTab = document.getElementById('delivery-tab');
     const nextToPaymentButton = document.getElementById('next-to-payment');
 
@@ -219,9 +219,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         nextToPaymentButton.disabled = !(deliveryDate && deliveryTime);
     });
 
-    // Handle "Next" button click in Delivery Options Tab
+    
     nextToPaymentButton.addEventListener('click', () => {
-        // Show Payment tab
+        
         document.querySelector('.tab-link.active').disabled = true;
         document.querySelector('.tab-link:nth-child(3)').disabled = false;
         openTab({ currentTarget: document.querySelector('.tab-link:nth-child(3)') }, 'payment-tab');
@@ -231,13 +231,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 async function initializePaymentTab() {
     try {
-        // Calculate total amount
+        
         const billAmount = document.querySelector('.billAmount').textContent.trim().replace('₹', '');
         const qrCodeContainer = document.getElementById('qr-code-container');
         console.log(billAmount)
 
         qrCodeContainer.innerHTML = ""
-        // Generate a QR Code with UPI link or static data
+        
         const upiLink = `upi://pay?pa=7999674838@ybl&pn=MissMart&am=1&cu=INR`;
         new QRCode(qrCodeContainer, {
             text: upiLink,
@@ -249,7 +249,7 @@ async function initializePaymentTab() {
     }
 }
 
-// Initialize Payment Tab on Activation
+
 const nextToPaymentButton = document.getElementById('next-to-payment');
 nextToPaymentButton.addEventListener('click', () => {
     openTab({ currentTarget: document.querySelector('.tab-link:nth-child(3)') }, 'payment-tab');
