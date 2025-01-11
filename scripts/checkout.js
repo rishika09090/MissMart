@@ -238,7 +238,7 @@ async function initializePaymentTab() {
 
         qrCodeContainer.innerHTML = ""
         
-        const upiLink = `upi://pay?pa=7999674838@ybl&pn=MissMart&am=1&cu=INR`;
+        const upiLink = `upi://pay?pa=rishika09090@okhdfcbank&pn=MissMart&am=${billAmount}&cu=INR`;
         new QRCode(qrCodeContainer, {
             text: upiLink,
             width: 150,
