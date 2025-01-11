@@ -1,4 +1,4 @@
-// Functionality for tabs
+// Tabs functionality
 function openTab(event, tabId) {
     const tabs = document.querySelectorAll('.tab-content');
     tabs.forEach(tab => tab.classList.add('hidden'));
@@ -16,7 +16,7 @@ const form = document.getElementById('address-form');
 const nextButton = document.getElementById('next-to-delivery');
 
 form.addEventListener('input', () => {
-    const allFieldsFilled = Array.from(form.querySelectorAll('input[required]')).every(input => input.value.trim() !== '');
+    const allFieldsFilled = Array.from(form.querySelectorAll('input[required]')).every(input => input.value.trim() !== '' || input.value.trim() !== null);
     nextButton.disabled = !allFieldsFilled;
 });
 
@@ -136,9 +136,122 @@ window.addEventListener('DOMContentLoaded', async () => {
             totalAmount += sellingPrice * item.quantity;
             totalSavings += savings;
         });
-        document.getElementById('billAmount').textContent = `₹${totalAmount.toFixed(2)}`;
-        document.getElementById('savings').textContent = `₹${totalSavings.toFixed(2)}`;
+        const billAmountElements = document.querySelectorAll('.billAmount');
+        billAmountElements.forEach(element => {
+            element.textContent = `₹${totalAmount.toFixed(2)}`;
+        });
+        const savingsAmountElements = document.querySelectorAll('.savings');
+        savingsAmountElements.forEach(element => {
+            element.textContent = `₹${totalSavings.toFixed(2)}`;
+        });
     } catch (error) {
         console.error('Error fetching data:', error);
     }
+
+
+
+
+    // Enable "Next" button for Address Tab
+    const addressForm = document.getElementById('address-form');
+    const nextToDeliveryButton = document.getElementById('next-to-delivery');
+
+    addressForm.addEventListener('input', () => {
+        const allFieldsFilled = Array.from(addressForm.querySelectorAll('input[required]')).every(input => input.value.trim() !== '' || input.value.trim() !== null);
+        nextToDeliveryButton.disabled = !allFieldsFilled;
+    });
+
+    // Handle "Next" button click in Address Tab
+    nextToDeliveryButton.addEventListener('click', async () => {
+        // Prepare address object
+        const address = {
+            name: document.getElementById('name').value.trim(),
+            mobile: document.getElementById('mobile').value.trim(),
+            state: document.getElementById('state').value.trim(),
+            city: document.getElementById('city').value.trim(),
+            area: document.getElementById('area').value.trim(),
+            landmark: document.getElementById('landmark').value.trim(),
+            house: document.getElementById('house').value.trim(),
+            pincode: document.getElementById('pincode').value.trim(),
+            type: document.querySelector('input[name="address-type"]:checked').value,
+        };
+        console.log(address)
+        try {
+            const username = localStorage.getItem("username");
+            if (!username) {
+                alert("No user logged in");
+                return;
+            }
+
+            // Fetch user object
+            const userResponse = await fetch(`https://bubbly-adorable-hose.glitch.me/users?username=${username}`);
+            const users = await userResponse.json();
+            if (users.length === 0) {
+                alert("User not found");
+                return;
+            }
+
+            const user = users[0];
+
+            // Update user with new address
+            user.address = address;
+            await fetch(`https://bubbly-adorable-hose.glitch.me/users/${user.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address }),
+            });
+
+            // Show Delivery Options tab
+            document.querySelector('.tab-link.active').disabled = true;
+            document.querySelector('.tab-link:nth-child(2)').disabled = false;
+            openTab({ currentTarget: document.querySelector('.tab-link:nth-child(2)') }, 'delivery-tab');
+        } catch (error) {
+            console.error('Error updating address:', error);
+        }
+    });
+
+    // Enable "Next" button for Delivery Options Tab
+    const deliveryTab = document.getElementById('delivery-tab');
+    const nextToPaymentButton = document.getElementById('next-to-payment');
+
+    deliveryTab.addEventListener('input', () => {
+        const deliveryDate = document.getElementById('delivery-date').value.trim();
+        const deliveryTime = document.getElementById('delivery-time').value.trim();
+        nextToPaymentButton.disabled = !(deliveryDate && deliveryTime);
+    });
+
+    // Handle "Next" button click in Delivery Options Tab
+    nextToPaymentButton.addEventListener('click', () => {
+        // Show Payment tab
+        document.querySelector('.tab-link.active').disabled = true;
+        document.querySelector('.tab-link:nth-child(3)').disabled = false;
+        openTab({ currentTarget: document.querySelector('.tab-link:nth-child(3)') }, 'payment-tab');
+    });
+
+});
+
+async function initializePaymentTab() {
+    try {
+        // Calculate total amount
+        const billAmount = document.querySelector('.billAmount').textContent.trim().replace('₹', '');
+        const qrCodeContainer = document.getElementById('qr-code-container');
+        console.log(billAmount)
+
+        qrCodeContainer.innerHTML = ""
+        // Generate a QR Code with UPI link or static data
+        const upiLink = `upi://pay?pa=7999674838@ybl&pn=MissMart&am=1&cu=INR`;
+        new QRCode(qrCodeContainer, {
+            text: upiLink,
+            width: 150,
+            height: 150,
+        });
+    } catch (error) {
+        console.error('Error generating QR Code:', error);
+    }
+}
+
+// Initialize Payment Tab on Activation
+const nextToPaymentButton = document.getElementById('next-to-payment');
+nextToPaymentButton.addEventListener('click', () => {
+    openTab({ currentTarget: document.querySelector('.tab-link:nth-child(3)') }, 'payment-tab');
+    initializePaymentTab();
 });

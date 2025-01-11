@@ -85,7 +85,7 @@
                 </form>
             </div>
 
-            <div id="orderSummary">
+            <div class="orderSummary">
                 <div>
                     <h2>
                         Order Summary
@@ -93,11 +93,11 @@
                     </h2>
                     <div>
                         <h4>Total Amount Payable</h4>
-                        <div id="billAmount"> 0 </div>
+                        <div class="billAmount"> 0 </div>
                     </div>
                     <div>
                         <h4> Total Savings </h4>
-                        <div id="savings"> 0 </div>
+                        <div class="savings"> 0 </div>
                     </div>
 
                     <span>
@@ -110,14 +110,83 @@
         <button type="button" id="next-to-delivery" disabled>Next</button>
 
         <div id="delivery-tab" class="tab-content hidden">
-            <h2>Delivery Options</h2>
-            <p>Coming Soon...</p>
+            <div>
+                <h2 id="deliveryHeading">Delivery Options</h2>
+                <form id="delivery-form">
+                    <div class="form-row">
+                        <label>
+                            <span>Select Delivery Date <span class="required">*</span></span>
+                            <input type="date" id="delivery-date" required>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <span>Select Delivery Time <span class="required">*</span></span>
+                            <select id="delivery-time" required>
+                                <option value="">Select Time Slot</option>
+                                <option value="9am-12pm">9 AM - 12 PM</option>
+                                <option value="12pm-3pm">12 PM - 3 PM</option>
+                                <option value="3pm-6pm">3 PM - 6 PM</option>
+                                <option value="6pm-9pm">6 PM - 9 PM</option>
+                            </select>
+                        </label>
+                    </div>
+                    <button type="button" id="next-to-payment" disabled>Next</button>
+                </form>
+            </div>
+            <div class="orderSummary">
+                <div>
+                    <h2>
+                        Order Summary
+                        <hr>
+                    </h2>
+                    <div>
+                        <h4>Total Amount Payable</h4>
+                        <div class="billAmount"> 0 </div>
+                    </div>
+                    <div>
+                        <h4> Total Savings </h4>
+                        <div class="savings"> 0 </div>
+                    </div>
+
+                    <span>
+                        Select your address and delivery slot to know accurate delivery charges. You can save more by
+                        applying a voucher!
+                    </span>
+                </div>
+            </div>
         </div>
 
+
         <div id="payment-tab" class="tab-content hidden">
-            <h2>Payment</h2>
-            <p>Coming Soon...</p>
+            <div id="payment-section">
+                <h2>Scan to Pay</h2>
+                <div id="qr-code-container">
+                    <!-- QR Code will be dynamically generated here -->
+                </div>
+                <p>Use any UPI app to scan this QR code and complete your payment.</p>
+            </div>
+        
+            <div class="orderSummary">
+                <h2>
+                    Order Summary
+                    <hr>
+                </h2>
+                <div>
+                    <h4>Total Amount Payable</h4>
+                    <div class="billAmount">₹0</div>
+                </div>
+                <div>
+                    <h4>Total Savings</h4>
+                    <div class="savings">₹0</div>
+                </div>
+                <span>
+                    Select your address and delivery slot to know accurate delivery charges. You can save more by applying a
+                    voucher!
+                </span>
+            </div>
         </div>
+        
     </div>
 
     <div id="footer-container"></div>
@@ -127,5 +196,6 @@
 <script src="scripts/checkout.js"></script>
 <script src="./scripts/navbar.js"></script>
 <script src="./scripts/footer.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 </html>

@@ -21,7 +21,8 @@ body {
 }
 
 #addressHeading,
-#addressType {
+#addressType,
+#deliveryHeading {
     margin: 20px 0px;
     padding: auto;
 }
@@ -121,7 +122,7 @@ input {
     border-radius: 5px;
     cursor: pointer;
     font-weight: 700;
-    
+
 }
 
 #next-to-delivery:hover {
@@ -132,8 +133,8 @@ input {
     width: fit-content;
 }
 
-#orderSummary{
-    border: 2px solid var(--color-pink-accent)   ;
+.orderSummary {
+    border: 2px solid var(--color-pink-accent);
     width: 500px;
     height: fit-content;
     padding: 20px;
@@ -142,26 +143,26 @@ input {
     background-color: var(--color-background-light);
 }
 
-#orderSummary > div {
+.orderSummary>div {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-#orderSummary > div > div:nth-child(3) {
+.orderSummary>div>div:nth-child(3) {
     color: var(--color-green-accent);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-#orderSummary > div > div:nth-child(2) {
+.orderSummary>div>div:nth-child(2) {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-#orderSummary > div > span {
+.orderSummary>div>span {
     /* width: 50%; */
     margin: auto;
     font-size: 13px;
@@ -169,4 +170,43 @@ input {
     border: 2px solid var(--color-green-accent);
     border-radius: 6px;
     padding: 20px;
+}
+
+#delivery-time,
+#delivery-date {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+#delivery-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#next-to-payment {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    color: white;
+}
+
+#payment-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#qr-code-container {
+    margin: 10px auto;
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
 }
