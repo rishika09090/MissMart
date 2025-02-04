@@ -27,6 +27,9 @@ Welcome to **Miss Mart**, a fully functional e-commerce platform inspired by **B
 
 ![Footer](https://github.com/user-attachments/assets/ecfbeb16-465b-41dc-9060-477db8adcad6)
 
+### Payment Page
+![image](https://github.com/user-attachments/assets/81f7a034-78a1-420c-a15d-04c6761e54e2)
+
 ---
 
 ## Features
